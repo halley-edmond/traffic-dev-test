@@ -1,0 +1,9 @@
+.banner{
+  height: calc(100vH - 89px);
+  width: 100%;
+  position: relative;
+  min-height: 668px;
+  @include respond-to("xs","sm","md"){
+    height: auto;
+  }
+}

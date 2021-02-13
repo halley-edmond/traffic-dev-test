@@ -1,0 +1,21 @@
+.logo{
+  width: 224px;
+  height: 138px;
+  background-color: #333333;
+  @include flexbox();
+  @include align-items(center);
+  @include justify-content(center);
+  @include respond-to("xs"){
+    width: 121px;
+    height: 75px;
+  }
+  &__image{
+    @include flex(0 0 auto);
+    height: 70px;
+    width: auto;
+    display: block;
+    @include respond-to("xs"){
+      height: 40px;
+    }
+  }
+}

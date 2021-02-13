@@ -1,0 +1,281 @@
+$xs-max: 767px;
+$sm-min: 768px;
+$sm-max: 991px;
+$md-min: 992px;
+$md-max: 1199px;
+$lg-min: 1200px;
+
+@mixin private-respond-to($current-media) {
+	@if $current-media=='xs' {
+		@media only screen and (max-width: $xs-max) {
+			@content;
+		}
+	}
+	@else if $current-media=='sm' {
+		@media only screen and (min-width: $sm-min) and (max-width: $sm-max) {
+			@content;
+		}
+	}
+
+	@else if $current-media=='md' {
+		@media only screen and (min-width: $md-min) and (max-width: $md-max) {
+			@content;
+		}
+	}
+
+	@else if $current-media=='lg' {
+		@media only screen and (min-width: $lg-min){
+			@content;
+		}
+	}
+}
+
+@mixin respond-to($media...) {
+	@for $i from 1 through length($media) {
+		@include private-respond-to(nth($media, $i)) {
+			@content;
+		}
+	}
+}
+
+@mixin verticalCentered() {
+	top: 50%;
+	-ms-transform: translate(0, -50%);
+	/* IE 9 */
+	-webkit-transform: translate(0, -50%);
+	/* Safari */
+	transform: translate(0, -50%);
+}
+
+@mixin horizontalCentered() {
+	left: 50%;
+	-ms-transform: translate(-50%, 0);
+	/* IE 9 */
+	-webkit-transform: translate(-50%, 0);
+	/* Safari */
+	transform: translate(-50%, 0);
+}
+
+@mixin centered() {
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	/* IE 9 */
+	-webkit-transform: translate(-50%, -50%);
+	/* Safari */
+	transform: translate(-50%, -50%);
+}
+
+@mixin opacity($param) {
+	$nondecimal: $param * 100;
+	-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=$param)';
+	filter: 'alpha(opacity=$param)';
+	-moz-opacity: $param;
+	opacity: $param;
+}
+
+@keyframes fadein {
+	from {
+		@include opacity(0);
+	}
+
+	to {
+		@include opacity(1);
+	}
+}
+@keyframes fadein85 {
+	from {
+		@include opacity(1);
+	}
+
+	to {
+		@include opacity(.5);
+	}
+}
+
+@keyframes fadeout {
+	from {
+		@include opacity(1);
+	}
+
+	to {
+		@include opacity(0);
+	}
+}
+
+@mixin rotate($deg) {
+	-ms-transform: rotate($deg);
+	/* IE 9 */
+	-webkit-transform: rotate($deg);
+	/* Chrome, Safari, Opera */
+	transform: rotate($deg);
+}
+
+@keyframes rotating {
+	from {
+		@include rotate(0deg);
+	}
+
+	to {
+		@include rotate(360deg);
+	}
+}
+
+@mixin fadeinAnimation() {
+	$par: fadein 0.3s 0s normal forwards ease-in-out;
+	animation: $par;
+	-webkit-animation: $par;
+}
+
+@mixin fadeinAnimation85() {
+	$par: fadein85 0.3s 0s normal forwards ease-in-out;
+	animation: $par;
+	-webkit-animation: $par;
+}
+
+@mixin slowfadeinAnimation() {
+	$par: fadein 0.5s 0s normal forwards ease-in-out;
+	animation: $par;
+	-webkit-animation: $par;
+}
+
+@mixin fadeoutAnimation() {
+	$par: fadeout 0.3s 0s normal forwards ease-in-out;
+	animation: $par;
+	-webkit-animation: $par;
+}
+
+@mixin rotatingAnimation() {
+	$par: rotating 1s linear infinite;
+	animation: $par;
+	-webkit-animation: $par;
+}
+
+@mixin boxshadow($param) {
+	box-shadow: $param;
+	-webkit-box-shadow: $param;
+}
+
+@mixin resetAppeareance() {
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	outline: none;
+}
+
+@mixin borderRadius($param) {
+	border-radius: $param;
+	-webkit-border-radius: $param;
+}
+
+@mixin placeholder($size, $color:#adadad) {
+	::-webkit-input-placeholder {
+		font-size: $size;
+		//font-style: italic;
+		color: $color;
+		@content;
+	}
+
+	::-moz-placeholder {
+		font-size: $size;
+		//font-style: italic;
+		color: $color;
+		@content;
+	}
+
+	:-ms-input-placeholder {
+		font-size: $size;
+		//font-style: italic;
+		color: $color;
+		@content;
+	}
+
+	:-moz-placeholder {
+		font-size: $size;
+		//font-style: italic;
+		color: $color;
+		@content;
+	}
+}
+
+
+
+@mixin transition($transition...) {
+	-webkit-transition: $transition;
+	   -moz-transition: $transition;
+		 -o-transition: $transition;
+			transition: $transition;
+}
+
+@mixin transform($param...) {
+	-webkit-transform: $param;
+	   -moz-transform: $param;
+		-ms-transform: $param;
+			transform: $param;
+}
+
+@function last-sels() {
+	$sel: &;
+	$out: ();
+
+	@each $list in $sel {
+		$curr: nth($list, length($list));
+
+		@if not index($out, $curr) {
+			$out: append($out, $curr, 'comma');
+		}
+	}
+
+	@return $out;
+}
+
+
+@mixin borderLinearGradient($params...) {
+	background: -moz-linear-gradient($params);
+	background: -webkit-linear-gradient($params);
+	background: linear-gradient($params);
+}
+
+@mixin horizontalGradient($color1, $color2) {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7abcff+0,4096ee+100 */
+	background: $color1;
+	/* Old browsers */
+	background: -moz-linear-gradient(left, $color1 0%, $color2 100%);
+	/* FF3.6-15 */
+	background: -webkit-linear-gradient(left, $color1 0%, $color2 100%);
+	/* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, $color1 0%, $color2 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$color1}', endColorstr='#{$color2}', GradientType=1);
+	/* IE6-9 */
+}
+
+@mixin verticalGradient($color1, $color2) {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7abcff+0,4096ee+100 */
+	background: $color1;
+	/* Old browsers */
+	background: -moz-linear-gradient(top, $color1 0%, $color2 100%);
+	/* FF3.6-15 */
+	background: -webkit-linear-gradient(top, $color1 0%, $color2 100%);
+	/* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, $color1 0%, $color2 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$color1}', endColorstr='#{$color2}', GradientType=0);
+	/* IE6-9 */
+}
+
+@mixin generalStyling() {
+	u {
+		text-decoration: underline;
+	}
+
+	i,
+	em {
+		font-style: italic;
+	}
+
+	strong,
+	b {
+		font-weight: bold;
+	}
+}

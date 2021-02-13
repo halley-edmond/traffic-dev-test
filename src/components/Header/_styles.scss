@@ -1,0 +1,35 @@
+.header{
+  height: 89px;
+  @include boxshadow(0px 2px 2px 0px #000000 5%);
+  position: relative;
+  z-index: 1;
+  @include respond-to("xs"){
+    height: 50px;
+  }
+  &__strip{
+    background-color: transparentize($primary,.3);
+    height: 32px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    @include respond-to("xs"){
+      height: 10px;
+    }
+  }
+  &__main{
+    background-color: #fff;
+    height: 100%;
+  }
+  &__logo{
+    @include flex(0 0 auto);
+  }
+  &__navigation{
+    @include flex(0 0 auto);
+  }
+  &__container{
+    @include flexbox();
+    @include justify-content(space-between);
+    position: relative;
+  }
+}
