@@ -1,6 +1,6 @@
 .header{
   height: 89px;
-  @include boxshadow(0px 2px 2px 0px #000000 5%);
+  @include boxshadow(0px 2px 2px 0px rgba(0,0,0,.5));
   position: relative;
   z-index: 1;
   @include respond-to("xs"){
